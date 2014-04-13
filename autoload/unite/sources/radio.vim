@@ -30,13 +30,14 @@ let s:source = {
     fun! s:source.gather_candidates(args, context) "{{{
         return map(copy(s:stations), "{
             \ 'word' : len(s:process) && s:process.url == v:val[1] ? '|P>'.v:val[0].'<P|' : v:val[0],
-            \ 'url': v:val[1]
+            \ 'url': v:val[1],
+            \ 'cmd': len(v:val) > 2 ? v:val[2] : ''
         \ }")
     endfun "}}}
 
     let s:source.action_table.execute = {'description' : 'play station'}
     fun! s:source.action_table.execute.func(candidate) "{{{
-        call unite#sources#radio#play(a:candidate.url)
+        call unite#sources#radio#play(a:candidate.url, a:candidate.cmd)
     endfunction "}}}
 
     fun! s:source.hooks.on_syntax(args, context) "{{{
@@ -81,7 +82,15 @@ if !s:play_cmd
     endif
 endif
 
-fun! unite#sources#radio#play(url) "{{{
+fun! unite#sources#radio#play(url, cmd) "{{{
+    if ! (a:url =~ '(pls|m3u|asx)')
+        let s:play_cmd = "mplayer -quiet"
+    endif
+
+    if a:cmd != ''
+        let s:play_cmd = a:cmd
+    endif
+
     call unite#sources#radio#stop()
     let s:process = vimproc#popen2(s:play_cmd.' '.a:url)
     let s:process.url = a:url
