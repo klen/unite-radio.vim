@@ -48,7 +48,6 @@ let s:source = {
         if len(s:process)
             call s:widemessage("Now Playing: " . s:process.url)
         endif
-        set statusline=111
     endfunction "}}}
 
     fun! s:hl_current()
