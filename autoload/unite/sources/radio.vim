@@ -4,10 +4,33 @@ set cpo&vim
 " Options {{{
 " -------
 let s:stations = get(g:, 'unite_source_radio_stations', [
+    \ ['Digitally Imported: Chillout Dreams' , 'http://listen.di.fm/public3/chilloutdreams.pls' ],
+    \ ['Digitally Imported: Chillout' , 'http://listen.di.fm/public3/chillout.pls' ],
     \ ['Digitally Imported: Funky House', 'http://listen.di.fm/public3/funkyhouse.pls' ],
-    \ ['Digitally Imported: Progressive', 'http://listen.di.fm/public3/progressive.pls' ],
     \ ['Digitally Imported: Lounge' , 'http://listen.di.fm/public3/lounge.pls' ],
-    \ ['Digitally Imported: PsyChill' , 'http://listen.di.fm/public3/psychill.pls' ]
+    \ ['Digitally Imported: Progressive', 'http://listen.di.fm/public3/progressive.pls' ],
+    \ ['Digitally Imported: PsyChill' , 'http://listen.di.fm/public3/psychill.pls' ],
+    \ ['Digitally Imported: Soulful House' , 'http://listen.di.fm/public3/soulfulhouse.pls' ],
+    \ ['Ragga Kings', 'http://www.raggakings.net/listen.m3u'],
+    \ ['SKY.FM: Best of the 80s', 'http://www.sky.fm/mp3/the80s.pls'],
+    \ ['SKY.FM: Classic Rap', 'http://www.sky.fm/mp3/classicrap.pls'],
+    \ ['SKY.FM: Jazz', 'http://www.sky.fm/mp3/jazz.pls'],
+    \ ['SKY.FM: Mostly Classical', 'http://www.sky.fm/mp3/classical.pls'],
+    \ ['SKY.FM: Salsa', 'http://www.sky.fm/mp3/salsa.pls'],
+    \ ['SKY.FM: Simply Soundtracks', 'http://www.sky.fm/mp3/soundtracks.pls'],
+    \ ['SKY.FM: Smooth Jazz', 'http://www.sky.fm/mp3/smoothjazz.pls'],
+    \ ['SKY.FM: Uptempo Smooth Jazz', 'http://www.sky.fm/mp3/uptemposmoothjazz.pls'],
+    \ ['Slay Radio (C64 Remix)', 'http://www.slayradio.org/tune_in.php/128kbps/listen.m3u'],
+    \ ['SomaFM: Beat Blender (House)', 'http://somafm.com/startstream=beatblender.pls'],
+    \ ['SomaFM: Cliq Hop', 'http://somafm.com/startstream=cliqhop.pls'],
+    \ ['SomaFM: Covers', 'http://somafm.com/covers.pls'],
+    \ ['SomaFM: Digitalis (Rock)', 'http://somafm.com/digitalis.pls'],
+    \ ['SomaFM: Groove Salad (Chillout)', 'http://somafm.com/startstream=groovesalad.pls'],
+    \ ['SomaFM: Illinois Street Lounge (Lounge)', 'http://somafm.com/illstreet.pls'],
+    \ ['SomaFM: PopTron! (Pop)', 'http://somafm.com/poptron.pls'],
+    \ ['SomaFM: Secret Agent (Downtempo)', 'http://somafm.com/secretagent.pls'],
+    \ ['SomaFM: Sonic Universe (Jazz)', 'http://somafm.com/startstream=sonicuniverse.pls'],
+    \ ['SomaFM: Tags Trance Trip (Progressive)', 'http://somafm.com/tagstrance.pls']
 \ ])
 let s:play_cmd = get(g:, 'unite_source_radio_play_cmd', '')
 let s:process = {}
