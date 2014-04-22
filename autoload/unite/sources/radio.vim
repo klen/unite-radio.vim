@@ -4,10 +4,33 @@ set cpo&vim
 " Options {{{
 " -------
 let s:stations = get(g:, 'unite_source_radio_stations', [
+    \ ['Digitally Imported: Chillout Dreams' , 'http://listen.di.fm/public3/chilloutdreams.pls' ],
+    \ ['Digitally Imported: Chillout' , 'http://listen.di.fm/public3/chillout.pls' ],
     \ ['Digitally Imported: Funky House', 'http://listen.di.fm/public3/funkyhouse.pls' ],
-    \ ['Digitally Imported: Progressive', 'http://listen.di.fm/public3/progressive.pls' ],
     \ ['Digitally Imported: Lounge' , 'http://listen.di.fm/public3/lounge.pls' ],
-    \ ['Digitally Imported: PsyChill' , 'http://listen.di.fm/public3/psychill.pls' ]
+    \ ['Digitally Imported: Progressive', 'http://listen.di.fm/public3/progressive.pls' ],
+    \ ['Digitally Imported: PsyChill' , 'http://listen.di.fm/public3/psychill.pls' ],
+    \ ['Digitally Imported: Soulful House' , 'http://listen.di.fm/public3/soulfulhouse.pls' ],
+    \ ['Ragga Kings', 'http://www.raggakings.net/listen.m3u'],
+    \ ['SKY.FM: Best of the 80s', 'http://www.sky.fm/mp3/the80s.pls'],
+    \ ['SKY.FM: Classic Rap', 'http://www.sky.fm/mp3/classicrap.pls'],
+    \ ['SKY.FM: Jazz', 'http://www.sky.fm/mp3/jazz.pls'],
+    \ ['SKY.FM: Mostly Classical', 'http://www.sky.fm/mp3/classical.pls'],
+    \ ['SKY.FM: Salsa', 'http://www.sky.fm/mp3/salsa.pls'],
+    \ ['SKY.FM: Simply Soundtracks', 'http://www.sky.fm/mp3/soundtracks.pls'],
+    \ ['SKY.FM: Smooth Jazz', 'http://www.sky.fm/mp3/smoothjazz.pls'],
+    \ ['SKY.FM: Uptempo Smooth Jazz', 'http://www.sky.fm/mp3/uptemposmoothjazz.pls'],
+    \ ['Slay Radio (C64 Remix)', 'http://www.slayradio.org/tune_in.php/128kbps/listen.m3u'],
+    \ ['SomaFM: Beat Blender (House)', 'http://somafm.com/startstream=beatblender.pls'],
+    \ ['SomaFM: Cliq Hop', 'http://somafm.com/startstream=cliqhop.pls'],
+    \ ['SomaFM: Covers', 'http://somafm.com/covers.pls'],
+    \ ['SomaFM: Digitalis (Rock)', 'http://somafm.com/digitalis.pls'],
+    \ ['SomaFM: Groove Salad (Chillout)', 'http://somafm.com/startstream=groovesalad.pls'],
+    \ ['SomaFM: Illinois Street Lounge (Lounge)', 'http://somafm.com/illstreet.pls'],
+    \ ['SomaFM: PopTron! (Pop)', 'http://somafm.com/poptron.pls'],
+    \ ['SomaFM: Secret Agent (Downtempo)', 'http://somafm.com/secretagent.pls'],
+    \ ['SomaFM: Sonic Universe (Jazz)', 'http://somafm.com/startstream=sonicuniverse.pls'],
+    \ ['SomaFM: Tags Trance Trip (Progressive)', 'http://somafm.com/tagstrance.pls']
 \ ])
 let s:play_cmd = get(g:, 'unite_source_radio_play_cmd', '')
 let s:process = {}
@@ -30,13 +53,14 @@ let s:source = {
     fun! s:source.gather_candidates(args, context) "{{{
         return map(copy(s:stations), "{
             \ 'word' : len(s:process) && s:process.url == v:val[1] ? '|P>'.v:val[0].'<P|' : v:val[0],
-            \ 'url': v:val[1]
+            \ 'url': v:val[1],
+            \ 'cmd': len(v:val) > 2 ? v:val[2] : ''
         \ }")
     endfun "}}}
 
     let s:source.action_table.execute = {'description' : 'play station'}
     fun! s:source.action_table.execute.func(candidate) "{{{
-        call unite#sources#radio#play(a:candidate.url)
+        call unite#sources#radio#play(a:candidate.url, a:candidate.cmd)
     endfunction "}}}
 
     fun! s:source.hooks.on_syntax(args, context) "{{{
@@ -47,7 +71,6 @@ let s:source = {
         if len(s:process)
             call s:widemessage("Now Playing: " . s:process.url)
         endif
-        set statusline=111
     endfunction "}}}
 
     fun! s:hl_current()
@@ -81,7 +104,15 @@ if !s:play_cmd
     endif
 endif
 
-fun! unite#sources#radio#play(url) "{{{
+fun! unite#sources#radio#play(url, cmd) "{{{
+    if ! (a:url =~ '(pls|m3u|asx)')
+        let s:play_cmd = "mplayer -quiet"
+    endif
+
+    if a:cmd != ''
+        let s:play_cmd = a:cmd
+    endif
+
     call unite#sources#radio#stop()
     let s:process = vimproc#popen2(s:play_cmd.' '.a:url)
     let s:process.url = a:url
