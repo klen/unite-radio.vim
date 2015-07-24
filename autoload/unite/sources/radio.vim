@@ -25,6 +25,7 @@ let s:stations = get(g:, 'unite_source_radio_stations', [
     \ ['SomaFM: Cliq Hop', 'http://somafm.com/startstream=cliqhop.pls'],
     \ ['SomaFM: Covers', 'http://somafm.com/covers.pls'],
     \ ['SomaFM: Digitalis (Rock)', 'http://somafm.com/digitalis.pls'],
+    \ ['SomaFM: DEF CON Radio', 'http://somafm.com/defcon.pls'],
     \ ['SomaFM: Groove Salad (Chillout)', 'http://somafm.com/startstream=groovesalad.pls'],
     \ ['SomaFM: Illinois Street Lounge (Lounge)', 'http://somafm.com/illstreet.pls'],
     \ ['SomaFM: PopTron! (Pop)', 'http://somafm.com/poptron.pls'],
