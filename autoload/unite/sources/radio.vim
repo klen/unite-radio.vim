@@ -92,7 +92,7 @@ let s:source = {
 command! -nargs=? MPlay call unite#sources#radio#play(<q-args>)
 command! MStop call unite#sources#radio#stop()
 
-if !s:play_cmd
+if empty(s:play_cmd)
     if executable('/Applications/VLC.app/Contents/MacOS/VLC')
         let s:play_cmd = '/Applications/VLC.app/Contents/MacOS/VLC -Irc --quiet'
     elseif executable('mplayer')
